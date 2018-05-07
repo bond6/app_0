@@ -11,6 +11,33 @@ var answer = [];
 var answer1 = [];
 var one_value = [];
 var two_value = [];
+var array_pictures_counter = 0;
+var array_pictures = [];
+var fact_afr = [ 
+					{ href : 'facts/FungicideBathAfr.jpg', title : 'Fungicide Bath' },
+                                        { href : 'facts/InlineDrenchFlooderAfr.jpg', title : 'Inline Drench Flooder' },
+					{ href : 'facts/PrePackhouseDrenchAfr.jpg', title : 'Pre-Packhouse Drench' },
+                                        { href : 'facts/WaterSanitationAfr.jpg', title : 'Water Sanitation' },
+                                        { href : 'facts/WaxApplicationAfr.jpg', title : 'Wax Application' }
+				];
+var fact_eng = [ 
+					{ href : 'facts/FungicideBathEng.jpg', title : 'Fungicide Bath' },
+                                        { href : 'facts/InlineDrenchFlooderEng.jpg', title : 'Inline Drench Flooder' },
+                                        { href : 'facts/PrePackhouseDrenchEng.jpg', title : 'Pre-Packhouse Drench' },
+					{ href : 'facts/WaterSanitationEng.jpg', title : 'Water Sanitation' },
+                                        { href : 'facts/WaxApplicationEng.jpg', title : 'Wax Application' }
+				];
+var label_pic = [ 
+					{ href : 'labels/CitruCure.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/Imaculate300EC.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/ImazaCure500EC.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/PropiCureLabel.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/PropirlyLabel.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Protector400SC.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Sporekill.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/TEACHER.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Thiabendazole500SC.jpg', title : 'Full labels on ICA website.' }
+				];
 var gau = ['CitriCure', 'Guazalil SL'];
 var ima = ['Guazalil SL','ImazaCure 500 EC','ImaCulate 300 EC', 'ImazaCure 750 SG'];
 var tbz = ['ICA Thiabendazole 500 SC'];
@@ -29,6 +56,9 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // device APIs are available
 //
+function open_pictures(picture_arr) {
+    array_pictures = picture_arr;
+}
 function nothing_func() {
  return false;
 }
@@ -39,6 +69,280 @@ function alert_desc() {
 navigator.notification.alert("ICA citrus post-harvest fungicide choices for different export markets.\n\nNote that compliance with product label instructions will ensure that residues do not exceed RSA MRL, but may not meet the import requirements of countries when MRL’s are lower than in RSA.",nothing_func,'Note', 'Done');
 }
 function onDeviceReady() {
+    (function() {
+
+		var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+			var parseThumbnailElements = function(el) {
+			    var thumbElements = el.childNodes,
+			        numNodes = thumbElements.length,
+			        items = [],
+			        el,
+			        childElements,
+			        thumbnailEl,
+			        size,
+			        item;
+
+			    for(var i = 0; i < numNodes; i++) {
+			        el = thumbElements[i];
+
+			        // include only element nodes 
+			        if(el.nodeType !== 1) {
+			          continue;
+			        }
+
+			        childElements = el.children;
+
+			        size = el.getAttribute('data-size').split('x');
+
+			        // create slide object
+			        item = {
+						src: el.getAttribute('href'),
+						w: parseInt(size[0], 10),
+						h: parseInt(size[1], 10),
+						author: el.getAttribute('data-author')
+			        };
+
+			        item.el = el; // save link to element for getThumbBoundsFn
+
+			        if(childElements.length > 0) {
+			          item.msrc = childElements[0].getAttribute('src'); // thumbnail url
+			          if(childElements.length > 1) {
+			              item.title = childElements[1].innerHTML; // caption (contents of figure)
+			          }
+			        }
+
+
+					var mediumSrc = el.getAttribute('data-med');
+		          	if(mediumSrc) {
+		            	size = el.getAttribute('data-med-size').split('x');
+		            	// "medium-sized" image
+		            	item.m = {
+		              		src: mediumSrc,
+		              		w: parseInt(size[0], 10),
+		              		h: parseInt(size[1], 10)
+		            	};
+		          	}
+		          	// original image
+		          	item.o = {
+		          		src: item.src,
+		          		w: item.w,
+		          		h: item.h
+		          	};
+
+			        items.push(item);
+			    }
+
+			    return items;
+			};
+
+			// find nearest parent element
+			var closest = function closest(el, fn) {
+			    return el && ( fn(el) ? el : closest(el.parentNode, fn) );
+			};
+
+			var onThumbnailsClick = function(e) {
+			    e = e || window.event;
+			    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+			    var eTarget = e.target || e.srcElement;
+
+			    var clickedListItem = closest(eTarget, function(el) {
+			        return el.tagName === 'A';
+			    });
+
+			    if(!clickedListItem) {
+			        return;
+			    }
+
+			    var clickedGallery = clickedListItem.parentNode;
+
+			    var childNodes = clickedListItem.parentNode.childNodes,
+			        numChildNodes = childNodes.length,
+			        nodeIndex = 0,
+			        index;
+
+			    for (var i = 0; i < numChildNodes; i++) {
+			        if(childNodes[i].nodeType !== 1) { 
+			            continue; 
+			        }
+
+			        if(childNodes[i] === clickedListItem) {
+			            index = nodeIndex;
+			            break;
+			        }
+			        nodeIndex++;
+			    }
+
+			    if(index >= 0) {
+			        openPhotoSwipe( index, clickedGallery );
+			    }
+			    return false;
+			};
+
+			var photoswipeParseHash = function() {
+				var hash = window.location.hash.substring(1),
+			    params = {};
+
+			    if(hash.length < 5) { // pid=1
+			        return params;
+			    }
+
+			    var vars = hash.split('&');
+			    for (var i = 0; i < vars.length; i++) {
+			        if(!vars[i]) {
+			            continue;
+			        }
+			        var pair = vars[i].split('=');  
+			        if(pair.length < 2) {
+			            continue;
+			        }           
+			        params[pair[0]] = pair[1];
+			    }
+
+			    if(params.gid) {
+			    	params.gid = parseInt(params.gid, 10);
+			    }
+
+			    return params;
+			};
+
+			var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+			    var pswpElement = document.querySelectorAll('.pswp')[0],
+			        gallery,
+			        options,
+			        items;
+
+				items = parseThumbnailElements(galleryElement);
+
+			    // define options (if needed)
+			    options = {
+
+			        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+			        getThumbBoundsFn: function(index) {
+			            // See Options->getThumbBoundsFn section of docs for more info
+			            var thumbnail = items[index].el.children[0],
+			                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+			                rect = thumbnail.getBoundingClientRect(); 
+
+			            return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+			        },
+
+			        addCaptionHTMLFn: function(item, captionEl, isFake) {
+						if(!item.title) {
+							captionEl.children[0].innerText = '';
+							return false;
+						}
+						captionEl.children[0].innerHTML = item.title +  '<br/><small>Photo: ' + item.author + '</small>';
+						return true;
+			        },
+					
+			    };
+
+
+			    if(fromURL) {
+			    	if(options.galleryPIDs) {
+			    		// parse real index when custom PIDs are used 
+			    		// http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+			    		for(var j = 0; j < items.length; j++) {
+			    			if(items[j].pid == index) {
+			    				options.index = j;
+			    				break;
+			    			}
+			    		}
+				    } else {
+				    	options.index = parseInt(index, 10) - 1;
+				    }
+			    } else {
+			    	options.index = parseInt(index, 10);
+			    }
+
+			    // exit if index not found
+			    if( isNaN(options.index) ) {
+			    	return;
+			    }
+
+
+
+
+			    if(disableAnimation) {
+			        options.showAnimationDuration = 0;
+			    }
+
+			    // Pass data to PhotoSwipe and initialize it
+			    gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+
+			    // see: http://photoswipe.com/documentation/responsive-images.html
+				var realViewportWidth,
+				    useLargeImages = false,
+				    firstResize = true,
+				    imageSrcWillChange;
+
+				gallery.listen('beforeResize', function() {
+
+					var dpiRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
+					dpiRatio = Math.min(dpiRatio, 2.5);
+				    realViewportWidth = gallery.viewportSize.x * dpiRatio;
+
+
+				    if(realViewportWidth >= 1200 || (!gallery.likelyTouchDevice && realViewportWidth > 800) || screen.width > 1200 ) {
+				    	if(!useLargeImages) {
+				    		useLargeImages = true;
+				        	imageSrcWillChange = true;
+				    	}
+				        
+				    } else {
+				    	if(useLargeImages) {
+				    		useLargeImages = false;
+				        	imageSrcWillChange = true;
+				    	}
+				    }
+
+				    if(imageSrcWillChange && !firstResize) {
+				        gallery.invalidateCurrItems();
+				    }
+
+				    if(firstResize) {
+				        firstResize = false;
+				    }
+
+				    imageSrcWillChange = false;
+
+				});
+
+				gallery.listen('gettingData', function(index, item) {
+				    if( useLargeImages ) {
+				        item.src = item.o.src;
+				        item.w = item.o.w;
+				        item.h = item.o.h;
+				    } else {
+				        item.src = item.m.src;
+				        item.w = item.m.w;
+				        item.h = item.m.h;
+				    }
+				});
+
+			    gallery.init();
+			};
+
+			// select all gallery elements
+			var galleryElements = document.querySelectorAll( gallerySelector );
+			for(var i = 0, l = galleryElements.length; i < l; i++) {
+				galleryElements[i].setAttribute('data-pswp-uid', i+1);
+				galleryElements[i].onclick = onThumbnailsClick;
+			}
+
+			// Parse URL and open gallery if it contains #&pid=3&gid=1
+			var hashData = photoswipeParseHash();
+			if(hashData.pid && hashData.gid) {
+				openPhotoSwipe( hashData.pid,  galleryElements[ hashData.gid - 1 ], true, true );
+			}
+		};
+                initPhotoSwipeFromDOM('.demo-gallery');
+                initPhotoSwipeFromDOM('.demo-gallery1');
+
+	})();
     $( '#gallery' ).click( function( e ) {
 				e.preventDefault();
 				$.swipebox( [ 
@@ -52,6 +356,29 @@ function onDeviceReady() {
 					{ href : 'labels/TEACHER.jpg', title : 'Full labels on ICA website.' },
                                         { href : 'labels/Thiabendazole500SC.jpg', title : 'Full labels on ICA website.' }
 				], {hideBarsDelay : 0, removeBarsOnMobile: false, loopAtEnd: true});
+
+			} );
+$( '#gallery1' ).click( function( e ) {
+				e.preventDefault();
+                                $("#button1_pressed").click();
+				/*$.swipebox( [ 
+					{ href : 'facts/FungicideBathEng.jpg', title : 'Fungicide Bath' },
+                                        { href : 'facts/InlineDrenchFlooderEng.jpg', title : 'Inline Drench Flooder' },
+                                        { href : 'facts/PrePackhouseDrenchEng.jpg', title : 'Pre-Packhouse Drench' },
+					{ href : 'facts/WaterSanitationEng.jpg', title : 'Water Sanitation' },
+                                        { href : 'facts/WaxApplicationEng.jpg', title : 'Wax Application' }
+				], {hideBarsDelay : 0, removeBarsOnMobile: false, loopAtEnd: true});*/
+			} );
+$( '#gallery2' ).click( function( e ) {
+				e.preventDefault();
+                                $("#button2_pressed").click();
+				/*$.swipebox( [ 
+					{ href : 'facts/FungicideBathAfr.jpg', title : 'Fungicide Bath' },
+                                        { href : 'facts/InlineDrenchFlooderAfr.jpg', title : 'Inline Drench Flooder' },
+					{ href : 'facts/PrePackhouseDrenchAfr.jpg', title : 'Pre-Packhouse Drench' },
+                                        { href : 'facts/WaterSanitationAfr.jpg', title : 'Water Sanitation' },
+                                        { href : 'facts/WaxApplicationAfr.jpg', title : 'Wax Application' }
+				], {hideBarsDelay : 0, removeBarsOnMobile: false, loopAtEnd: true});*/
 			} );
 var sCSV = "c,RSA,EU,USA,Codex A,Codex B,Japan,Korea,Canada,Taiwan,GSO,Hong Kong\nLemons,DDAC 6;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 2;Propiconazole 6;Pyrimethanil 10;TBZ 6,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz 10;Propiconazole 5;Pyrimethanil 8;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC 6;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 6;Pyrimethanil 10;TBZ 5,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole N;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 5;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 6;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz N;Propiconazole 4;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz 10;Propiconazole N;Pyrimethanil 10;TBZ 10\nGrapefruit,DDAC 6;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 2;Propiconazole 6;Pyrimethanil 10;TBZ 6,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz 10;Propiconazole 5;Pyrimethanil 8;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC 6;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 6;Pyrimethanil 10;TBZ 5,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole N;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 4;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 5;Guazatine 5;Imazalil 5;Prochloraz N;Propiconazole 4;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz 10;Propiconazole N;Pyrimethanil 10;TBZ 10\nOranges,DDAC 6;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 2;Propiconazole 6;Pyrimethanil 10;TBZ 6,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz 10;Propiconazole 9;Pyrimethanil 8;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 9;Pyrimethanil 7;TBZ 7,DDAC 6;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 6;Pyrimethanil 10;TBZ 5,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole N;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 5;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 8;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 5;Guazatine 5;Imazalil 5;Prochloraz N;Propiconazole 4;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 9;Pyrimethanil 7;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz 10;Propiconazole N;Pyrimethanil 10;TBZ 10\nMandarin types,DDAC 6;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 2;Propiconazole 6;Pyrimethanil 10;TBZ 6,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz 10;Propiconazole 5;Pyrimethanil 8;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC 6;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole 6;Pyrimethanil 10;TBZ 5,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole N;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 1;Guazatine N;Imazalil 5;Prochloraz 1;Propiconazole N;Pyrimethanil 1;TBZ 10,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 5;Prochloraz N;Propiconazole 8;Pyrimethanil 10;TBZ 10,DDAC N;Fludioxonil 7;Guazatine 5;Imazalil 5;Prochloraz N;Propiconazole N;Pyrimethanil 7;TBZ 10,DDAC N;Fludioxonil 10;Guazatine 5;Imazalil 5;Prochloraz 10;Propiconazole N;Pyrimethanil 7;TBZ 7,DDAC N;Fludioxonil 10;Guazatine N;Imazalil 10;Prochloraz 10;Propiconazole N;Pyrimethanil 10;TBZ 10";
 	var lines=sCSV.split("\n");

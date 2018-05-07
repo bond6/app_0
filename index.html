@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html style="background-color:LightGray;">
-<p style='font: 7px Arial;'>Version 1.00</p>
+<p style='font: 7px Arial;'>Version 1.01</p>
 
 <style>
+
 .button {
+  display: inline-block;
   font: bold 11px Arial;
   text-decoration: none;
   background-color: #EEEEEE;
@@ -13,6 +15,8 @@
   border-right: 3px solid #333333;
   border-bottom: 3px solid #333333;
   border-left: 3px solid #CCCCCC;
+  word-warp: break-word;
+  width: 100px;
 }
 .row0 {
 background-color:white;
@@ -28,15 +32,16 @@ table {border-radius:6px; border: 3px solid black; border-spacing: 0px;box-shado
 <div id='begin_page'>
 <hr style="background-color:#0095C1;height:40px;"></hr>
 <div style='width:100%;display:inline-block;'>
-<img style="width:200px;display:inline-block;" src="img/logo1.gif">
+<img  style="width:200px;display:inline-block;" src="img/logo1.gif">
 <div style="width:100px;margin-left:auto;margin-right:0;display:inline-block;vertical-align:top;">
 <a href="#" onclick="window.open('http://www.icaonline.co.za', '_system');return false;">ICA website</a><br><br><br>
 <a href="#" onclick="window.open('https://www.facebook.com/ICAInternationalChemicals/?rf=1585922241735402', '_system');return false;"><img src='img/facebook.png' style="width:25px;"></img></a><br>
 </div>
 </div>
   <body id="body_id">
-    <b><p><a class='button' href="#" onclick="alert_desc(); return false;">Description of the app</a><a class='button' href="#" onclick="go_to_div('dosis'); return false;">Dosages as registered in RSA</a></p></b>
-<p><a class='button' id="gallery" href="#">View labels</a></p>
+    <b><p><a class='button' href="#" onclick="alert_desc(); return false;">App Description</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class='button' href="#" onclick="go_to_div('dosis'); return false;">Dosages (RSA)</a></p></b>
+<b><p><a class='button' id="gallery1" href="#">Factsheets Eng</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class='button' id="gallery2" href="#">Factsheets Afr</a></p></b>
+<b><p><a class='button' id="gallery" href="#">Labels</a></p></b>
 <div style="margin-left:0;">
 <b style="margin-left:20px;">Citrus Commodity</b>
 <form>
@@ -86,12 +91,163 @@ Find country: <input id='input_country' type='input' onkeyup='scroll_to();'>
 <script src="js/jquery.min.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="js/jquery.swipebox.min.js"></script>
-
+<script src="js/impetus.js"></script>
+<script src="js/pinch-zoom-canvas.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+<link href="js/photoswipe.css" rel="stylesheet" />
+    <link href="js/default-skin.css" rel="stylesheet" />
+    <link href="js/default-skin.css" rel="stylesheet" />    
+    
+      <script src="js/photoswipe.min.js"></script>
+      <script src="js/photoswipe-ui-default.min.js"></script>
 
-  </body>
+
+    
+
+
+
+    
+    
+
+
+    	
+              <div id="demo-test-gallery1" class="demo-gallery1" style='display:none;'>
+
+	        <a id="button1_pressed" href="facts/FungicideBathEng.jpg" data-size="1746x2359" data-med="facts/FungicideBathEng.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/FungicideBathEng.jpg" alt="" />
+	          <figure>Fungicide Bath</figure>
+	        </a>
+
+	        <a href="facts/InlineDrenchFlooderEng.jpg" data-size="1746x2359" data-med="facts/InlineDrenchFlooderEng.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/InlineDrenchFlooderEng.jpg" alt="" />
+	          <figure>Inline Drench Flooder</figure>
+	        </a>
+
+
+	        <a href="facts/PrePackhouseDrenchEng.jpg" data-size="1746x2359" data-med="facts/PrePackhouseDrenchEng.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/PrePackhouseDrenchEng.jpg" alt="" />
+	          <figure>Pre-Packhouse Drench</figure>
+	        </a>
+
+
+	        <a href="facts/WaterSanitationEng.jpg" data-size="1746x2359" data-med="facts/WaterSanitationEng.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/WaterSanitationEng.jpg" alt="" />
+	          <figure>Water Sanitation</figure>
+	        </a>
+
+	        <a href="facts/WaxApplicationEng.jpg" data-size="1746x2359" data-med="facts/WaxApplicationEng.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/WaxApplicationEng.jpg" alt="" />
+	          <figure>Wax Application</figure>
+	        </a>
+
+
+
+	      </div>
+
+	      <div id="demo-test-gallery" class="demo-gallery" style='display:none;'>
+
+	        <a id="button2_pressed" href="facts/FungicideBathAfr.jpg" data-size="1746x2359" data-med="facts/FungicideBathAfr.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/FungicideBathAfr.jpg" alt="" />
+	          <figure>Fungicide Bath</figure>
+	        </a>
+
+	        <a href="facts/InlineDrenchFlooderAfr.jpg" data-size="1746x2359" data-med="facts/InlineDrenchFlooderAfr.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/InlineDrenchFlooderAfr.jpg" alt="" />
+	          <figure>Inline Drench Flooder</figure>
+	        </a>
+
+
+	        <a href="facts/PrePackhouseDrenchAfr.jpg" data-size="1746x2359" data-med="facts/PrePackhouseDrenchAfr.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/PrePackhouseDrenchAfr.jpg" alt="" />
+	          <figure>Pre-Packhouse Drench</figure>
+	        </a>
+
+
+	        <a href="facts/WaterSanitationAfr.jpg" data-size="1746x2359" data-med="facts/WaterSanitationAfr.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/WaterSanitationAfr.jpg" alt="" />
+	          <figure>Water Sanitation</figure>
+	        </a>
+
+	        <a href="facts/WaxApplicationAfr.jpg" data-size="1746x2359" data-med="facts/WaxApplicationAfr.jpg" data-med-size="1746x2359" data-author="" class="demo-gallery__img--main">
+	          <img src="facts/WaxApplicationAfr.jpg" alt="" />
+	          <figure>Wax Application</figure>
+	        </a>
+
+
+
+	      </div>
+	      <!-- <figure class="demo-gallery__title">Demo gallery &middot; 5 photos</figure> -->
+
+
+	</div>
+
+
+	
+
+  	
+
+    <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+
+        <div class="pswp__scroll-wrap">
+
+          <div class="pswp__container">
+			<div class="pswp__item"></div>
+			<div class="pswp__item"></div>
+			<div class="pswp__item"></div>
+          </div>
+
+          <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+				<div class="pswp__counter"></div>
+
+				<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+				<button class="pswp__button pswp__button--share" title="Share"></button>
+
+				<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+				<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+				<div class="pswp__preloader">
+					<div class="pswp__preloader__icn">
+					  <div class="pswp__preloader__cut">
+					    <div class="pswp__preloader__donut"></div>
+					  </div>
+					</div>
+				</div>
+            </div>
+
+
+			<!-- <div class="pswp__loading-indicator"><div class="pswp__loading-indicator__line"></div></div> -->
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+	            <div class="pswp__share-tooltip">
+					<!-- <a href="#" class="pswp__share--facebook"></a>
+					<a href="#" class="pswp__share--twitter"></a>
+					<a href="#" class="pswp__share--pinterest"></a>
+					<a href="#" download class="pswp__share--download"></a> -->
+	            </div>
+	        </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+            <div class="pswp__caption">
+              <div class="pswp__caption__center">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+    </div>
+    
+  
 </div>
 
 </html>

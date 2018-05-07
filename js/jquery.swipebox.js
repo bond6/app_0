@@ -302,7 +302,7 @@
 					startCoords = {},
 					endCoords = {},
 					// C.C. begin
-					pinchData = {inProgress:false,lastZoom:1,overZoom:false},
+					//pinchData = {inProgress:false,lastZoom:1,overZoom:false},
 					// C.C. end
 					bars = $( '#swipebox-top-bar, #swipebox-bottom-bar' ),
 					slider = $( '#swipebox-slider' );
@@ -319,7 +319,7 @@
 					startCoords.pageY = event.originalEvent.targetTouches[0].pageY;
 
 					// C.C. begin
-					if (event.originalEvent.targetTouches.length > 1) {
+					/*if (event.originalEvent.targetTouches.length > 1) {
 						// pinch started
 						pinchData.inProgress = true;
 						pinchData.startZoom = pinchData.lastZoom;
@@ -333,7 +333,7 @@
 					} else {
 						pinchData.inProgress = false;
 					}
-					if (!pinchData.inProgress && !pinchData.overZoom) {
+					if (!pinchData.inProgress && !pinchData.overZoom) {*/
 					// C.C. end
 					
 						$( '#swipebox-slider' ).css( {
@@ -342,7 +342,7 @@
 						} );
 					
 					// C.C. begin
-					}
+					//}
 					// C.C. end
 					
 					$( '.touching' ).bind( 'touchmove',function( event ) {
@@ -351,7 +351,7 @@
 						endCoords = event.originalEvent.targetTouches[0];
 
 						// C.C. begin
-						if (pinchData.inProgress) {
+						/*if (pinchData.inProgress) {
 							var lastDistance = Math.sqrt(Math.pow(event.originalEvent.targetTouches[0].pageX-event.originalEvent.targetTouches[1].pageX,2) + Math.pow(event.originalEvent.targetTouches[0].pageY-event.originalEvent.targetTouches[1].pageY,2));
 							var scale = pinchData.startZoom * (1+(lastDistance-pinchData.startDistance)/pinchData.startDistance);
 							scale = Math.max(1, scale);
@@ -401,7 +401,7 @@
 							return;
 						}
 						// C.C. end
-						
+						*/
 						if ( ! hSwipe ) {
 							vDistanceLast = vDistance;
 							vDistance = endCoords.pageY - startCoords.pageY;
@@ -471,14 +471,14 @@
 					event.stopPropagation();
 
 					// C.C. begin
-					if (!pinchData.inProgress && pinchData.overZoom) {
+					/*if (!pinchData.inProgress && pinchData.overZoom) {
 						pinchData.centerTop = pinchData.lastCenterTop;
 						pinchData.centerLeft = pinchData.lastCenterLeft;
 					}
 					if (pinchData.inProgress || pinchData.overZoom) {
 						$( '.touching' ).off( 'touchmove' ).removeClass( 'touching' );
 						return;
-					}
+					}*/
 					// C.C. end
 					
 					$( '#swipebox-slider' ).css( {
@@ -512,11 +512,11 @@
 						if( hDistance >= hSwipMinDistance && hDistance >= hDistanceLast) {
 
 							// C.C. begin
-							if (pinchData.lastZoom > 1) {
+							/*if (pinchData.lastZoom > 1) {
 								// let's reset css props before swiping
 								$('#swipebox-slider .current img').css({'transform':'', '-webkit-transform':'', 'top':'', 'left':''});
 								pinchData.lastZoom = 1;
-							}
+							}*/
 							// C.C. end
 							$this.getPrev();
 
@@ -524,11 +524,11 @@
 						} else if ( hDistance <= -hSwipMinDistance && hDistance <= hDistanceLast) {
 
 							// C.C. begin
-							if (pinchData.lastZoom > 1) {
+							/*if (pinchData.lastZoom > 1) {
 								// let's reset css props before swiping
 								$('#swipebox-slider .current img').css({'transform':'', '-webkit-transform':'', 'top':'', 'left':''});
 								pinchData.lastZoom = 1;
-							}
+							}*/
 							// C.C. end
 							$this.getNext();
 						}
