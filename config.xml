@@ -51,7 +51,7 @@
         <icon src="images/Icon-App-40x40@2x.png" width="100" height="100" />
         <!-- iPad Pro -->
         <icon src="images/Icon-App-40x40@2x.png" width="167" height="167" />
-        <icon src="img/logo.png" width="1024" height="1024" />
+        <icon src="img/logo1_1.png" width="1024" height="1024" />
         
     </platform>
     <engine name="android" spec="^6.3.0" />
