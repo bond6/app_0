@@ -15,14 +15,14 @@ var array_pictures_counter = 0;
 var array_pictures = [];
 var fact_afr = [ 
 					{ href : 'facts/FungicideBathAfr.jpg', title : 'Fungicide Bath' },
-                                        { href : 'facts/InlineDrenchFlooderAfr.jpg', title : 'Inline Drench Flooder' },
+                                        /*{ href : 'facts/InlineDrenchFlooderAfr.jpg', title : 'Inline Drench Flooder' },*/
 					{ href : 'facts/PrePackhouseDrenchAfr.jpg', title : 'Pre-Packhouse Drench' },
                                         { href : 'facts/WaterSanitationAfr.jpg', title : 'Water Sanitation' },
                                         { href : 'facts/WaxApplicationAfr.jpg', title : 'Wax Application' }
 				];
 var fact_eng = [ 
 					{ href : 'facts/FungicideBathEng.jpg', title : 'Fungicide Bath' },
-                                        { href : 'facts/InlineDrenchFlooderEng.jpg', title : 'Inline Drench Flooder' },
+                                        /*{ href : 'facts/InlineDrenchFlooderEng.jpg', title : 'Inline Drench Flooder' },*/
                                         { href : 'facts/PrePackhouseDrenchEng.jpg', title : 'Pre-Packhouse Drench' },
 					{ href : 'facts/WaterSanitationEng.jpg', title : 'Water Sanitation' },
                                         { href : 'facts/WaxApplicationEng.jpg', title : 'Wax Application' }
