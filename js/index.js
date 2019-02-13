@@ -281,7 +281,7 @@ function onDeviceReady() {
 				    firstResize = true,
 				    imageSrcWillChange;
 
-				gallery.listen('beforeResize', function() {
+	gallery.listen('beforeResize', function() {
 
 					var dpiRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
 					dpiRatio = Math.min(dpiRatio, 2.5);
@@ -360,7 +360,7 @@ function onDeviceReady() {
                                         { href : 'labels/Sporekill1.jpg', title : 'Full labels on ICA website.' },
 					{ href : 'labels/TEACHER1.jpg', title : 'Full labels on ICA website.' },
                                         { href : 'labels/Thiabendazole500SC1.jpg', title : 'Full labels on ICA website.' }
-];
+
 				], {hideBarsDelay : 0, removeBarsOnMobile: false, loopAtEnd: true});
 
 			} );
