@@ -348,15 +348,19 @@ function onDeviceReady() {
     $( '#gallery' ).click( function( e ) {
 				e.preventDefault();
 				$.swipebox( [ 
-					{ href : 'labels/CitruCure.jpg', title : 'Full labels on ICA website.' },
-					{ href : 'labels/Imaculate300EC.jpg', title : 'Full labels on ICA website.' },
-                                        { href : 'labels/ImazaCure500EC.jpg', title : 'Full labels on ICA website.' },
-                                        { href : 'labels/PropiCureLabel.jpg', title : 'Full labels on ICA website.' },
-					{ href : 'labels/PropirlyLabel.jpg', title : 'Full labels on ICA website.' },
-                                        { href : 'labels/Protector400SC.jpg', title : 'Full labels on ICA website.' },
-                                        { href : 'labels/Sporekill.jpg', title : 'Full labels on ICA website.' },
-					{ href : 'labels/TEACHER.jpg', title : 'Full labels on ICA website.' },
-                                        { href : 'labels/Thiabendazole500SC.jpg', title : 'Full labels on ICA website.' }
+					 
+					{ href : 'labels/CitruCure1.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/Hypercide1.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/Imaculate300EC1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/ImazaCure500EC1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/ImazaCure750EC1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/PropiCureLabel1.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/PropirlyLabel1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Protector400SC1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Sporekill1.jpg', title : 'Full labels on ICA website.' },
+					{ href : 'labels/TEACHER1.jpg', title : 'Full labels on ICA website.' },
+                                        { href : 'labels/Thiabendazole500SC1.jpg', title : 'Full labels on ICA website.' }
+];
 				], {hideBarsDelay : 0, removeBarsOnMobile: false, loopAtEnd: true});
 
 			} );
